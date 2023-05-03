@@ -15,7 +15,7 @@
           "options": {
             "outputPath": "dist/clientes-app",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "main": "src/main.ts",            
             "polyfills": [
               "zone.js"
             ],
@@ -25,9 +25,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/css/bootstrap.min.css"
             ],
-            "scripts": []
+            "scripts": ["src/assets/js/bootstrap.bundle.min.js"]
           },
           "configurations": {
             "production": {
@@ -94,5 +95,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

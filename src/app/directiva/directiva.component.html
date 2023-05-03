@@ -1,0 +1,20 @@
+<button type="button" (click)="setHabilitar()" class="btn btn-primary my-3">{{(habilitar==true)? "Ocultar": "Mostrar"}}</button>
+<!--En el evento (click) le retornamos lo que el metodo setHabilitar() devuelva
+    En las llaves de interpolacion indicamos el texto del boton segun la variable habilitar
+    Esa linea puede compararse con un operador ternario y leerse como: Si habilitar=true entonces "Ocultar" sino "Mostrar"-->
+<div class="card">
+    <div class="card-header">
+        Lista de cursos
+    </div>
+    <ul class="list-group" *ngIf="habilitar == true">
+        
+        <li class="list-group-item" *ngFor="let curso of listacurso">{{curso}}</li>
+        <!--Iteramos sobre la lista creada en el .ts llamada listacurso-->
+        <!--Cuando se utiliza el ngFor; let curso(item: es la variable que se esta iterando) of el_arreglo -->
+        <!--Al final se debe mostrar el elemento de la iteracion entre corchetes, que son las llaves de interpolacion de String
+            {{variable}}. Para este caso la variable que se creo es "curso"-->
+        <!--El <li></li> se repite tantas veces como elementos se tengan en el arreglo listacurso-->
+
+    </ul>
+
+</div>
