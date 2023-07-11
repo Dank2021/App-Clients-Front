@@ -30,7 +30,7 @@ export class FormComponent implements OnInit{
       params => {
         let id = params['id'];
         if(id){ //Si el id existe:
-          this.clienteService.getCliente(id).subscribe( //Asignamos los valores al objeto cliente de esta clase
+          this.clienteService.getClienteId(id).subscribe( //Asignamos los valores al objeto cliente de esta clase
             cliente => this.cliente = cliente
           )
         }

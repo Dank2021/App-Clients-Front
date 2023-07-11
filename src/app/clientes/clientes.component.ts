@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import swal from 'sweetalert2';
+import { tap } from 'rxjs';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html'  
@@ -27,11 +28,19 @@ export class ClientesComponent {
     por medio del objeto clienteService para traer el listado de tipo Cliente[]. Esto cuando queremos traer los datos sincronamente 
     por lo que el metodo getClientes() devuelve un arreglo de Cliente[]*/
 
-    /* Ahora trayendo los datos asincronamente, nos debemos suscribir al Observable
+    /* Ahora trayendo los datos asincronamente, nos debemos suscribir al Observable de getClientes()
         Desde esta clase llamamos al metodo que se comunica directamente con el back para asi llenar el arreglo de clientes que se
         mostrara en el clientes.componente.html*/
-    this.clienteService.getClientes().subscribe(
-      clientes => this.clientes = clientes  //Funcion anonima muy abreviada (function (clientes) {this.clientes = clientes})                  
+        let page = 0;
+    this.clienteService.getClientes(page).pipe(
+      tap(response => {
+          console.log('ClientesComponent: tap: 3');
+          (response.content as Cliente[]).forEach(cliente => {
+          console.log(cliente.nombre);                  
+          });
+      })
+    ).subscribe(
+      response => this.clientes = (response.content as Cliente[])  //Funcion anonima muy abreviada (function (clientes) {this.clientes = clientes})                  
     );     
   }
   

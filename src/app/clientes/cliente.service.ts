@@ -33,7 +33,7 @@ export class ClienteService {
 
 
   //Metodo Get:
-  getClientes(): Observable<Cliente[]> {    
+  getClientes(page:number): Observable<any> {    //Porque desde el back ya no se recibe un Cliente[] sino un content (por la paginacion realizada)
     //Consumiendo los datos del archivo clientes.js.ts a traves de un observable
     //return of(CLIENTES);    
     
@@ -49,18 +49,18 @@ export class ClienteService {
     */
 
     //Consumiendo la api backend y sus datos.
-    return this.http.get(this.urlEndPoint).pipe(
+    return this.http.get(this.urlEndPoint + '/page/'+ page).pipe(
 
-      tap(response => {     //El operador tap modifica, realiza procesos, guarda con los datos, pero no les cambia su valor
-        let clientes = response as Cliente[]; //Se cambia el response de tipo Objetc a tipo Cliente[] para poder usar el forEach
+      tap((response: any) => {     //El operador tap modifica, realiza procesos, guarda con los datos, pero no les cambia su valor
+        //let clientes = response as Cliente[]; //Se cambia el response de tipo Objetc a tipo Cliente[] para poder usar el forEach
         console.log("Tap 1: ");
-        clientes.forEach( cliente => {          
+        (response.content as Cliente[]).forEach( cliente => {          
           console.log(cliente.nombre);
         })
       }),
-      map(response => {   //Al parecer el map sirve para la conversion de diferentes tipos de datos. Este map es para cambiar de flujo a listado clientes
-        let clientes = response as Cliente[];
-        return clientes.map(  //Retornamos cada cliente del listado Clientes con los cambios realizados en este map:
+      map((response:any) => {   //Al parecer el map sirve para la conversion de diferentes tipos de datos. Este map es para cambiar de flujo a listado clientes
+        
+         (response.content as Cliente []).map(  //Retornamos cada cliente del listado Clientes con los cambios realizados en este map:
           cliente => { //En este segundo map, manipulamos cada dato del listado clientes
             cliente.nombre = cliente.nombre.toUpperCase(); //Para convertirlos a Mayusculas            
             //cliente.createAt = formatDate(cliente.createAt, 'EEEE dd/MMMM/yyyy', 'es'); //Para modificar su formato fecha
@@ -72,11 +72,12 @@ export class ClienteService {
             return cliente;
           }
         )
+        return response;
         }),
         tap(response => {          
           console.log("Tap 2: ");
           //No hace falta la linea de conversion del response del 1er tap, puesto que los datos ya pasaron por el map y ahora son tipo Cliente[]
-          response.forEach( cliente => {          
+          (response.content as Cliente[]).forEach( cliente => {          
             console.log(cliente.nombre);
           })
         })
@@ -90,7 +91,7 @@ export class ClienteService {
   }
 
   //Metod GetByID: Se acomoda endpoint getById del back. 
-  getCliente(id): Observable<Cliente>{    
+  getClienteId(id): Observable<Cliente>{    
     return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`).pipe(    //Para consumirlo solo necesita un Id al final de la URL.
       catchError(e => {   //En caso de existir error.
         this.router.navigate(['/clientes']);  //Redirige a la tabla(Componente clientes).
