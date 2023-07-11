@@ -1,25 +1,50 @@
-<div class="card text-bg-primary mb-3">
+<div class="card text-bg-warning mb-3">
     <div class="card-header">Clientes</div>
     <div class="card-body">
       <h5 class="card-title">Listado clientes</h5>
-    <table class= "table table-bordered table-striped">
+
+        <div class="my-2 text-left">
+            <!--routerLink permite crear enlaces hacia las rutas ya registradas -->
+            <!--Boton crear cliente-->
+            <button class="btn btn-rounded" type="button" [routerLink] = "['/clientes/form']" style="background-color: #6495ED; color: black;">Crear Cliente</button>
+        </div>
+
+        <!--Con este ngIf verificamos el contenido de el arreglo clientes, si es null o 0 se muestra una alerta con un mensaje-->
+        <div *ngIf="clientes?.length == null || clientes?.length == 0 " class="alert alert-info">
+            No hay registros que mostrar!
+        </div>
+        <!--Este ngIf es para mostrar la tabla cuando, el arrelgo clientes al menos 1 cliente -->
+    <table class= "table table-bordered table-striped" *ngIf="clientes?.length > 0"><!--Este ngIf es para mostrar la tabla cuando, el arrelgo clientes al menos 1 cliente -->
         <thead>
-            <tr>
+            <tr>                
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Email</th>
                 <th>Fecha</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let cliente of clientes">
                 <td>{{cliente.id}}</td>
                 <td>{{cliente.nombre}}</td>
-                <td>{{cliente.apellido}}</td>                                                
+                <td>{{cliente.apellido | uppercase}}</td>   <!--Tambien se pueden alterar los datos en el HTML USANDO '|'-->
                 <td>{{cliente.email}}</td>
-                <td>{{cliente.createAt}}</td>
+                <td>{{cliente.createAt | date:"EEEE dd, MMMM yyyy"}}</td>   <!--Usando '|' solo se debe modificar de un lado, o del HTML o del .ts-->
+                <td>
+                    <button type="button" name="editar" [routerLink] = "['/clientes/form', cliente.id]" class="btn btn-primary">Editar</button>
+                </td>
+                <td>
+                    <button type="button" name="eliminar" (click)='delete(cliente)' class="btn btn-danger">Eliminar</button>
+                </td>
             </tr>
+            <!--Iteramos sobre la lista creada en el .ts llamada clientes-->
+            <!--Cuando se utiliza el ngFor; let cliente(item: es la variable que se esta iterando) of el_arreglo(De donde se itera) -->
+            <!--Al final se debe mostrar el elemento de la iteracion entre corchetes, que son las llaves de interpolacion de String
+            {{variable}}. Para este caso la variable que se creo es "cliente"-->
+            <!--Los <td></td> se repiten tantas veces como elementos se tengan en el arreglo clientes-->
         </tbody>
     </table>
     </div>

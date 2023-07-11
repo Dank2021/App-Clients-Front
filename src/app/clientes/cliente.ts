@@ -2,8 +2,8 @@ export class Cliente {
     id: number;
     nombre: string;
     apellido: string;        
-    createAt: string
     email: string;
+    createAt: string;    
 }
  
 /* Creamos esta clase para poder simular un consumo de datos que apareceran en una tabla mostrando como se puede recolectar datos 
