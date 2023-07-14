@@ -47,5 +47,8 @@
             <!--Los <td></td> se repiten tantas veces como elementos se tengan en el arreglo clientes-->
         </tbody>
     </table>
+    <paginator-nav *ngIf="paginador"  [paginador] = "paginador"></paginator-nav>
+    <!--[paginador] = "paginador": le estamos inyectando el atributo "paginador" que es del padre, al atributo [paginador] que es del hijo (paginator-nav)-->
+    <!--El *ngIf="paginador" permite asegurarse que ese atributo ya esta creado y puede ser inyectado. Si se inyecta sin crearse, causa problemas.-->
     </div>
   </div>

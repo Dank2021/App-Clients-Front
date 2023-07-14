@@ -3,6 +3,7 @@ import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import swal from 'sweetalert2';
 import { tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-clientes',
   templateUrl: './clientes.component.html'  
@@ -18,8 +19,10 @@ export class ClientesComponent {
   /* Sin necesidad de llamar con la clase service, los datos pueden ser directamente llamados al agregarlos desde aca a la variable 
   que el html solicita, es decir "clientes". */
 
+  paginador : any;
+
   //Inyeccion de dependencia
-  constructor(private clienteService: ClienteService){} 
+  constructor(private clienteService: ClienteService, private activatedRoute: ActivatedRoute){ } 
 
   ngOnInit(){    
     //Consumiendo los datos del archivo clientes.js.ts a traves de un observable
@@ -31,17 +34,33 @@ export class ClientesComponent {
     /* Ahora trayendo los datos asincronamente, nos debemos suscribir al Observable de getClientes()
         Desde esta clase llamamos al metodo que se comunica directamente con el back para asi llenar el arreglo de clientes que se
         mostrara en el clientes.componente.html*/
-        let page = 0;
-    this.clienteService.getClientes(page).pipe(
-      tap(response => {
-          console.log('ClientesComponent: tap: 3');
-          (response.content as Cliente[]).forEach(cliente => {
-          console.log(cliente.nombre);                  
-          });
-      })
-    ).subscribe(
-      response => this.clientes = (response.content as Cliente[])  //Funcion anonima muy abreviada (function (clientes) {this.clientes = clientes})                  
-    );     
+    
+        //activatedRoute.paramMap: Se encarga de suscribir un observador cada que cambia el parametro page.
+    this.activatedRoute.paramMap.subscribe(params => {  
+        //Se obtiene el parametro page:
+        let page:number = +params.get('page');       //Convertimos el params a tipo number (solo con '+') para utilizarlo como argumento en el get
+        
+        if (!page) {  //Si page no esta definido, que sea 0.
+          page = 0;
+        }        
+        this.clienteService.getClientes(page) //Usamos el getClientes() pasando como parametro el page anteriormente obtenido y convertido
+        .pipe(
+          tap(response => { //Este tap solo imprime los nombres de los clientes traidos desde el get. No todos solo el numero definido. Los muestra por consola.
+              console.log('ClientesComponent: tap: 3');
+              (response.content as Cliente[]).forEach(cliente => {
+              console.log(cliente.nombre);                  
+              });
+          })
+        )
+        .subscribe(
+          response => {
+            this.clientes = (response.content as Cliente[])  //Se recuerda que el back envia un content ya no un Cliente[]. Pero lo casteamos con el 'as'
+            this.paginador = response;  //Tomamos todo el JSON content del back.
+          }
+        );
+      }     
+    )
+    
   }
   
   delete(cliente: Cliente): void{

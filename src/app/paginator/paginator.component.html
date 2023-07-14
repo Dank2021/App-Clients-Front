@@ -1,0 +1,6 @@
+<ul *ngIf="paginas?.length > 0" class="pagination"> <!--Se muestra si existe. Para eso el *ngIf-->
+<li class="page-item" *ngFor="let pagina of paginas" ><!--Itera sobre el arreglo paginas creado en paginador.componenet.ts-->
+    <span class="page-link" *ngIf="pagina-1 == paginador.number">{{pagina}}</span><!--Si estamos en la misma pagina del indice del paginador. Se desactiva el boton de la pagina actual.-->
+    <a *ngIf="pagina-1 != paginador.number" class="page-link" [routerLink]="['/clientes/page', pagina-1]">{{pagina}}</a><!--Para los demas botones se muestra normal y se activa su link a su correspondiente pagina-->
+</li>
+</ul>
