@@ -42,7 +42,7 @@ export class FormComponent implements OnInit{
   create(): void{    
     this.clienteService.createCliente(this.cliente).subscribe(        
       response => { //El atributo 'response' se comporta como un JSON, por lo que permite no solo usar el campo 'cliente' sino que tambien permite utilizar el campo 'mensaje' que viene desde el back al retornar un map con estos.
-        swal.fire('Nuevo Cliente', `Cliente agregado: ${response.cliente.nombre} ${response.mensaje}`, 'success'); //Se emerge una ventana indicado el exito de la funcion, utilizando los atributos de respuesta que envia el back. 
+        swal.fire('Nuevo Cliente', `Ciente: ${response.cliente.nombre} ${response.cliente.apellido} ${response.mensaje}`, 'success'); //Se emerge una ventana indicado el exito de la funcion, utilizando los atributos de respuesta que envia el back. 
         this.router.navigate(['/clientes'])        
       },
       err => {
