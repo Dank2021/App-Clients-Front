@@ -26,7 +26,7 @@
             <div class="form-group row">
                 <label for="apellido" class="col-from-label col-sm-2">Apellido</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" #apellido="ngModel"> <!--Caja de texto Apellido--><!--required-->
+                    <input type="text" class="form-control" [(ngModel)]="cliente.apellido" name="apellido" #apellido="ngModel" style="margin-top: 10px;"> <!--Caja de texto Apellido--><!--required-->
                     <!--Se validan los posibles errores al ingresar el campo apellido-->
                     <div class="alert alert-danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched )">
                         <div *ngIf="apellido.errors.required">
@@ -39,7 +39,7 @@
             <div class="form-group row">
                 <label for="email" class="col-from-label col-sm-2">Email</label>
                 <div class="col-sm-6">
-                    <input type="email" class="form-control" [(ngModel)]="cliente.email" name="email" #email="ngModel"><!--Caja de texto Email--><!--required email-->
+                    <input type="email" class="form-control" [(ngModel)]="cliente.email" name="email" #email="ngModel" style="margin-top: 10px;"><!--Caja de texto Email--><!--required email-->
                     <!--Se validan los posibles errores al ingresar el campo email-->
                     <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched )">
                         <div *ngIf="email.errors.required">
@@ -50,15 +50,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="form-group row">
-                <label for="createAt" class="col-from-label col-sm-2">Fecha</label>
-                <div class="col-sm-6"> 
-                    <input type="date" class="form-control" [(ngModel)]="cliente.createAt" name="createAt"><!--Caja de texto Fecha--><!--required createAt-->                                        
-                </div>
-            </div>
-                        
+            </div>                                    
             <div class="form-group row ">
                 <!--Boton de registrar nuevo cliente-->
                 <div class="col-sm-6">

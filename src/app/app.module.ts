@@ -10,10 +10,11 @@ import { FormComponent } from './clientes/form.component';
 import { PaginatorComponent } from './paginator/paginator.component';  
 import { ClienteService } from './clientes/cliente.service';
 import { RouterModule, Routes } from '@angular/router'; //(1-Routing)Las rutas permiten, dividir la aplicacion en varias secciones o paginas.
-import {HttpClientModule} from '@angular/common/http';  //(1-ConnBackGET)Componete de Angular que permite conectarse con el servidor remoto, a travez de peticiones HTTP(Get,Post,Put,Delete)
-import {FormsModule} from '@angular/forms'; //Se importa para trabaja con formularios
-import {registerLocaleData } from '@angular/common';
+import { HttpClientModule} from '@angular/common/http';  //(1-ConnBackGET)Componete de Angular que permite conectarse con el servidor remoto, a travez de peticiones HTTP(Get,Post,Put,Delete)
+import { FormsModule} from '@angular/forms'; //Se importa para trabaja con formularios
+import { registerLocaleData } from '@angular/common';
 import localeES from '@angular/common/locales/es';  //Para ajustar la fecha a español
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 registerLocaleData(localeES, 'es')
@@ -45,10 +46,13 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule, //(2-ConnBackGET)Se registra para poder ser usado por la clase service.
     RouterModule.forRoot(routes), //(3-R) Se registra el import del arreglo de rutas. 
-    FormsModule //Se registra para trabaja con formularios
+    FormsModule, //Se registra para trabaja con formularios
+    BrowserAnimationsModule
   ],
-  providers: [ClienteService,   //Asi es como se implementan los servicios en el app.module
-    {provide: LOCALE_ID, useValue: 'es'}],    //Locale_Id una constante que define el lenguaje de los datos en el html.
+  providers: [
+    ClienteService,   //Asi es como se implementan los servicios en el app.module         
+    {provide: LOCALE_ID, useValue: 'es'}      //Locale_Id una constante que define el lenguaje de los datos en el html.
+  ],
   bootstrap: [AppComponent]       
 })
 export class AppModule { }
