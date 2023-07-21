@@ -2,10 +2,28 @@
     <div class="card-header">{{titulo}}</div>
     <div class="card-body">
         
-        <div class="input-group">
-            <input (change)="seleccionarFoto($event)" type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-            <button (click)="subirFoto()" class="btn btn-primary" type="button" id="inputGroupFileAddon04">Subir</button>
-        </div>          
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <ul *ngIf="cliente" class="list-group text-dark mb-4" ><!--El *ngIf se coloca para evitar que el html se cargue antes que el suscribe reciba al cliente. Eso genera error en la consola al principio-->
+                        <li class="list-group-item">{{cliente.nombre}}</li>
+                        <li class="list-group-item">{{cliente.apellido}}</li>
+                        <li class="list-group-item">{{cliente.email}}</li>
+                        <li class="list-group-item">{{cliente.createAt | date:"fullDate"}}</li>
+                    </ul>
+                    <div class="input-group">
+                        <input (change)="seleccionarFoto($event)" type="file" class="form-control p-3 bg-dark text-white" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                        <button (click)="subirFoto()" [disabled]="!fotoSeleccionada" class="btn btn-primary" type="button" id="inputGroupFileAddon04">Subir</button>
+                    </div>   
+                </div>
+                <div class="col-sm">
+                    <img *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}" class="rounded">
+                    <!-- class="img-thumbnail rounded"-->
+                </div>
+            </div>
+        </div>
+
+              
 
     </div>
 </div>
