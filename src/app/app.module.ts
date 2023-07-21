@@ -15,6 +15,7 @@ import { FormsModule} from '@angular/forms'; //Se importa para trabaja con formu
 import { registerLocaleData } from '@angular/common';
 import localeES from '@angular/common/locales/es';  //Para ajustar la fecha a español
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FotoComponent } from './clientes/foto/foto.component';
 
 
 registerLocaleData(localeES, 'es')
@@ -29,7 +30,8 @@ const routes: Routes = [
   {path: 'clientes/page/:page', component: ClientesComponent},  //Ruta para el endpoint la pagina/seccion de los datos a mostrar.
   {path: 'home', component: HomeComponent},   //(5-Hom) Se crea u path para el componente
   {path: 'clientes/form', component: FormComponent},  //Enlace al formulario
-  {path: 'clientes/form/:id', component: FormComponent}
+  {path: 'clientes/form/:id', component: FormComponent},
+  {path: 'clientes/upload/:id', component: FotoComponent}
 ];
 @NgModule({
   declarations: [
@@ -40,7 +42,7 @@ const routes: Routes = [
     ClientesComponent,
     HomeComponent,    //(4-Hom)Registrar
     FormComponent, 
-    PaginatorComponent   
+    PaginatorComponent, FotoComponent   
   ],
   imports: [    //Se sospecha que en este arreglo se registran modulos que se utilizan en diferentes clases.
     BrowserModule,

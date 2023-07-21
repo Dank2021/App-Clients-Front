@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { formatDate } from '@angular/common';
-import { CLIENTES as CLIENTES } from './clientes.json';
+//import { CLIENTES as CLIENTES } from './clientes.json';
 import { Cliente } from './cliente';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -145,5 +145,23 @@ export class ClienteService {
         return throwError(() => e);   //Devuelve el error envuelto en una funcion flecha para que coincida con el tipo Observable.
       })
     );
-}
+  }
+
+  subirFoto(archivo : File, id) : Observable<Cliente>{
+
+    let formData = new FormData();  //Utiliza el formato si el tipo de codificacion fuera "multipart/form-data"
+    formData.append("archivo", archivo);  //'archivo' debe ser el nombre, pues asi se nombro en el back y deben coincidir.
+    formData.append("id", id);  //Con el id igual.
+
+    //Aca usamos el endpoint 'upload' del back que requiere un 'archivo' y un 'id'. Se los pasamos a traves del formData.
+    return this.http.post(`${this.urlEndPoint}/upload`, formData).pipe(//Los pipe nos permiten recoger lo que nos devuelve el back
+      map( (response : any) => response.cliente as Cliente), //Con el map capturamos eso que nos devuelve el back y lo acomodamos a lo que se necesita aca en el front
+      catchError(e => {   
+        console.error("El error es: ", e.error.mensaje);
+        swal.fire(e.error.mensaje, e.error.error, 'error');
+        return throwError(() => e);   
+      })
+    );
+
+  }
 }
