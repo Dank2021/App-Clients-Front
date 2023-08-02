@@ -1,3 +1,4 @@
+<foto-cliente *ngIf="clienteSeleccionado" [cliente]="clienteSeleccionado"></foto-cliente>
 <div class="card text-bg-warning mb-3">
     <div class="card-header">Clientes</div>
     <div class="card-body">
@@ -28,7 +29,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let cliente of clientes">
-                <td><button [routerLink]= "['/clientes/upload', cliente.id]"  class="btn btn-success">{{cliente.id}}</button></td>                
+                <td><button (click)="abrirModal(cliente)"  class="btn btn-success">{{cliente.id}}</button></td>                
                 <td>{{cliente.nombre}}</td>
                 <td>{{cliente.apellido | uppercase}}</td>   <!--Tambien se pueden alterar los datos en el HTML USANDO '|'-->
                 <td>{{cliente.email}}</td>

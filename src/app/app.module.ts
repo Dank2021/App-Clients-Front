@@ -30,8 +30,7 @@ const routes: Routes = [
   {path: 'clientes/page/:page', component: ClientesComponent},  //Ruta para el endpoint la pagina/seccion de los datos a mostrar.
   {path: 'home', component: HomeComponent},   //(5-Hom) Se crea u path para el componente
   {path: 'clientes/form', component: FormComponent},  //Enlace al formulario
-  {path: 'clientes/form/:id', component: FormComponent},
-  {path: 'clientes/upload/:id', component: FotoComponent}
+  {path: 'clientes/form/:id', component: FormComponent},  
 ];
 @NgModule({
   declarations: [

@@ -4,7 +4,7 @@ import { formatDate } from '@angular/common';
 import { Cliente } from './cliente';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import {HttpClient, HttpHeaderResponse, HttpHeaders} from '@angular/common/http'; //(3-ConnBackGET)Componete de Angular que permite conectarse con el servidor remoto, a travez de peticiones HTTP(Get,Post,Put,Delete)   
+import {HttpClient, HttpHeaderResponse, HttpHeaders, HttpRequest, HttpEvent} from '@angular/common/http'; //(3-ConnBackGET)Componete de Angular que permite conectarse con el servidor remoto, a travez de peticiones HTTP(Get,Post,Put,Delete)   
 import  swal  from 'sweetalert2';
 import { Router } from '@angular/router';
 
@@ -147,21 +147,18 @@ export class ClienteService {
     );
   }
 
-  subirFoto(archivo : File, id) : Observable<Cliente>{
-
+  subirFoto(archivo : File, id) : Observable<HttpEvent<{}>>{
+     
     let formData = new FormData();  //Utiliza el formato si el tipo de codificacion fuera "multipart/form-data"
-    formData.append("archivo", archivo);  //'archivo' debe ser el nombre, pues asi se nombro en el back y deben coincidir.
+    formData.append("archivo", archivo);  //'archivo' es como se nombro el parametro en el endpoint del back y deben coincidir en el front.
     formData.append("id", id);  //Con el id igual.
 
     //Aca usamos el endpoint 'upload' del back que requiere un 'archivo' y un 'id'. Se los pasamos a traves del formData.
-    return this.http.post(`${this.urlEndPoint}/upload`, formData).pipe(//Los pipe nos permiten recoger lo que nos devuelve el back
-      map( (response : any) => response.cliente as Cliente), //Con el map capturamos eso que nos devuelve el back y lo acomodamos a lo que se necesita aca en el front
-      catchError(e => {   
-        console.error("El error es: ", e.error.mensaje);
-        swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(() => e);   
-      })
-    );
-
+    const req = new HttpRequest('POST', `${this.urlEndPoint}/upload`, formData, { //Creamos un HttpReques de tipo POST, que peticiona a dicha url y envia los datos de formData
+      reportProgress: true  
+    });
+    
+    return this.http.request(req)
+    //Usamos un http.request al parecer porque al devolver un HttpEvent podemos tomar el progreso de subida de la imagen, perfecto para crear una barra de progreso
   }
 }

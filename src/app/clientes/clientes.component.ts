@@ -19,7 +19,8 @@ export class ClientesComponent {
   /* Sin necesidad de llamar con la clase service, los datos pueden ser directamente llamados al agregarlos desde aca a la variable 
   que el html solicita, es decir "clientes". */
 
-  paginador : any;
+  clienteSeleccionado:Cliente;
+  paginador : any;  
 
   //Inyeccion de dependencia
   constructor(private clienteService: ClienteService, private activatedRoute: ActivatedRoute){ } 
@@ -95,5 +96,9 @@ export class ClientesComponent {
         )        
       }
     })
+  }
+
+  abrirModal(cliente:Cliente){
+    this.clienteSeleccionado = cliente;
   }
 }
