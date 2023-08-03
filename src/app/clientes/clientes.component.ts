@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
+import { ModalService } from './foto/modal.service';
 import swal from 'sweetalert2';
 import { tap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -23,7 +24,11 @@ export class ClientesComponent {
   paginador : any;  
 
   //Inyeccion de dependencia
-  constructor(private clienteService: ClienteService, private activatedRoute: ActivatedRoute){ } 
+  constructor(
+    private clienteService: ClienteService, 
+    private activatedRoute: ActivatedRoute,
+    private modalService: ModalService
+    ){ } 
 
   ngOnInit(){    
     //Consumiendo los datos del archivo clientes.js.ts a traves de un observable
@@ -99,6 +104,8 @@ export class ClientesComponent {
   }
 
   abrirModal(cliente:Cliente){
+
     this.clienteSeleccionado = cliente;
+    this.modalService.abrirModal();
   }
 }

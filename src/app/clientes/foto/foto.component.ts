@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Cliente } from '../cliente';
 import { ClienteService } from '../cliente.service';
+import { ModalService } from './modal.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpEventType } from '@angular/common/http'
 import swal from 'sweetalert2';
@@ -14,9 +15,12 @@ export class FotoComponent implements OnInit{
     @Input() cliente : Cliente;  //Este atributo viene como inyeccion desde Clientes.component.ts. Por eso el decorador Input()
     titulo = "Imagen Cliente";
     fotoSeleccionada : File;
-    progreso : number = 0;    
+    progreso : number = 0;        
 
-    constructor(private clienteService: ClienteService, private activatedRoute : ActivatedRoute){}
+    constructor(
+      private clienteService: ClienteService, 
+      private activatedRoute : ActivatedRoute,
+      public modalService : ModalService){}
   
     ngOnInit(): void {
       //Para cuando cambia el parametro del id para obtener la foto:
@@ -59,6 +63,12 @@ export class FotoComponent implements OnInit{
           }          
       });
     }    
+  }
+
+  cerrarModal(){
+    this.modalService.cerrarModal();
+    this.fotoSeleccionada = null;
+    this.progreso = 0;
   }
 }
 
