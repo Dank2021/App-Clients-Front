@@ -18,7 +18,7 @@
     <table class= "table table-bordered table-striped" *ngIf="clientes?.length > 0"><!--Este ngIf es para mostrar la tabla cuando, el arrelgo clientes al menos 1 cliente -->
         <thead>
             <tr>                
-                <th>ID</th>
+                <th>Foto</th>
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Email</th>
@@ -29,7 +29,14 @@
         </thead>
         <tbody>
             <tr *ngFor="let cliente of clientes">
-                <td><button (click)="abrirModal(cliente)"  class="btn btn-success">{{cliente.id}}</button></td>                
+                <td>
+                    <img *ngIf="cliente?.foto" (click)="abrirModal(cliente)" 
+                    src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}" class="rounded"
+                    style="width: 64px; cursor: pointer;">                   
+                    
+                    <img *ngIf="!cliente?.foto" (click)="abrirModal(cliente)" 
+                    src="http://localhost:8080/images/not_user.png" alt="SinFoto" class="rounded"
+                    style="width: 64px; cursor: pointer;">
                 <td>{{cliente.nombre}}</td>
                 <td>{{cliente.apellido | uppercase}}</td>   <!--Tambien se pueden alterar los datos en el HTML USANDO '|'-->
                 <td>{{cliente.email}}</td>

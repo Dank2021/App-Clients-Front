@@ -67,7 +67,7 @@ export class FotoComponent implements OnInit{
 
   cerrarModal(){
     this.modalService.cerrarModal();
-    this.fotoSeleccionada = null;
+    //this.fotoSeleccionada = null;
     this.progreso = 0;
   }
 }
