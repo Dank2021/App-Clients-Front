@@ -59,6 +59,7 @@ export class FotoComponent implements OnInit{
           } else if ( event.type == HttpEventType.Response){
             let response : any = event.body;
             this.cliente = response.cliente as Cliente;
+            this.modalService.notificarUpload.emit(this.cliente); //Cada vez que subamos una foto se debe notificar y emitir el cliente actualizado  
             swal.fire('Foto Subida Correctamente', response.mensaje, 'success');      
           }          
       });

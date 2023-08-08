@@ -1,4 +1,4 @@
-<div class="abrir-modal animacion fadeIn" *ngIf="modalService.modal" ><!--El *ngIf es para mostrar solo si el modal es true.-->
+<div class="abrir-modal animacion fadeIn" *ngIf="modalService.modal" ><!--El *ngIf es para mostrar solo si el modal (dialog box) es true.-->
   <div class="modal" tabindex="-1" style="display: block;">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -31,6 +31,7 @@
                     </div>
   
                   <div class="col-sm">
+                    <!--Foto del cliente. Es traida del back por el endpoint que dispone de las imagenes como descarga:-->
                       <img *ngIf="cliente?.foto" src="http://localhost:8080/api/uploads/img/{{cliente.foto}}" alt="{{cliente.foto}}" class="rounded">
                       <!-- class="img-thumbnail rounded"-->
                   </div>

@@ -66,7 +66,16 @@ export class ClientesComponent {
         );
       }     
     )
-    
+    this.modalService.notificarUpload.subscribe(cliente => {  //Recibimos el cliente con la foto actualizada.
+      this.clientes = this.clientes.map(clienteOriginal => {  //Recorremos la lista clientes, el indice seria "clienteOriginal"
+        if (cliente.id == clienteOriginal.id) {  //Revisamos cual es el cliente a actualizarle la foto entre toda la lista
+          clienteOriginal.foto = cliente.foto   //Actualizamos inmediatamente la foto actualizada
+        }
+        return clienteOriginal; //Retornamos el listado con la actualizacion.
+      })
+    })
+
+
   }
   
   delete(cliente: Cliente): void{
