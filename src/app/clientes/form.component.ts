@@ -3,6 +3,7 @@ import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import { Route, Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { Region } from './Region';
 
 @Component({
   selector: 'app-form',
@@ -11,6 +12,7 @@ import swal from 'sweetalert2';
 })
 export class FormComponent implements OnInit{
   public cliente: Cliente = new Cliente;
+  public regiones: Region[];
   public titulo: String = "Crear/Editar Cliente";
   public errores : String[];
 
@@ -21,12 +23,12 @@ export class FormComponent implements OnInit{
 
   ngOnInit(): void {
     this.cargarCliente(); //Cada vez que se recurra al formulario, se ejecutara el metodo que enlaza automaticamente los campos.
+
   }
 
-  
-  //GetByID: Este metodo rellena los campos del formulario usando el Id dado cuando se quiere editar un usuario en especifico
-  cargarCliente(): void{    
-    this.activatedRoute.params.subscribe(      
+  //GetByID: Este metodo rellena los campos del formulario usando el Id dado en la URL cuando se quiere editar un usuario en especifico.
+  cargarCliente(): void{
+    this.activatedRoute.params.subscribe(
       params => {
         let id = params['id'];
         if(id){ //Si el id existe:
@@ -36,6 +38,7 @@ export class FormComponent implements OnInit{
         }
       }
     )
+    this.clienteService.getRegiones().subscribe( regiones => this.regiones = regiones)
   }
 
   //Post: Cuando en el formulario se vaya a crear un cliente, redirige a la tabla y emerge una ventana indicando el exito de la peticion Post.

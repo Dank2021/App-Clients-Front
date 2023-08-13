@@ -4,6 +4,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">{{cliente.nombre}}</h5>
+          <!--Boton X esquina superior derecha del modal-->
           <button (click)="cerrarModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
   
@@ -16,6 +17,7 @@
                           <li class="list-group-item">{{cliente.apellido}}</li>
                           <li class="list-group-item">{{cliente.email}}</li>
                           <li class="list-group-item">{{cliente.createAt | date:"fullDate"}}</li>
+                          <li class="list-group-item">{{cliente.region}}</li>
                       </ul>
                       <!--Barra y boton de subida de imagen:-->
                       <div class="input-group mb-3">
@@ -40,6 +42,7 @@
         </div>
   
         <div class="modal-footer">
+          <!--Boton Close esquina inferior derecha-->
           <button (click)="cerrarModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>        
         </div>
   

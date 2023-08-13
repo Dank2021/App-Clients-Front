@@ -54,7 +54,7 @@ export class ClientesComponent {
           tap(response => { //Este tap solo imprime los nombres de los clientes traidos desde el get. No todos solo el numero definido. Los muestra por consola.
               console.log('ClientesComponent: tap: 3');
               (response.content as Cliente[]).forEach(cliente => {
-              console.log(cliente.nombre);                  
+              console.log(cliente.nombre);
               });
           })
         )

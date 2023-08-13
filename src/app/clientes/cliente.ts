@@ -1,3 +1,5 @@
+import { Region } from "./Region";
+
 export class Cliente {
     id: number;
     nombre: string;
@@ -5,6 +7,7 @@ export class Cliente {
     email: string;
     createAt: string;    
     foto: string;
+    region: Region;
 }
  
 /* Creamos esta clase para poder simular un consumo de datos que apareceran en una tabla mostrando como se puede recolectar datos 

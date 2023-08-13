@@ -7,6 +7,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 import {HttpClient, HttpHeaderResponse, HttpHeaders, HttpRequest, HttpEvent} from '@angular/common/http'; //(3-ConnBackGET)Componete de Angular que permite conectarse con el servidor remoto, a travez de peticiones HTTP(Get,Post,Put,Delete)   
 import  swal  from 'sweetalert2';
 import { Router } from '@angular/router';
+import { Region } from './Region';
 
 /* Los decoradores indican que tipo de clase va a ser en Angular, cual es su rol y trabajo dentro de la aplicacion.
     @Injectable: Es para clase de servicios, representa la logica de negocio. Se puede inyectar a otros componentes
@@ -23,6 +24,7 @@ export class ClienteService {
 
   constructor(private http: HttpClient, private router : Router) { } //(5-ConnBackGET)Creamos una variable HttpCliente para trabajar con ella. Se inyecta una dependencia.
 
+  
   //Consumiendo los datos del archivo clientes.js.ts
    /* getClientes(): Cliente[] {
     return CLIENTES;    
@@ -31,6 +33,9 @@ export class ClienteService {
   la respuesta del servidor .espera
   */ 
 
+  getRegiones(): Observable<Region[]>{
+    return this.http.get<Region[]>(this.urlEndPoint + '/regiones');
+  }
 
   //Metodo Get:
   getClientes(page:number): Observable<any> {    //Porque desde el back ya no se recibe un Cliente[] sino un content (por la paginacion realizada)

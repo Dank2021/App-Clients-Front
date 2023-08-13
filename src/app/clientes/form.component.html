@@ -50,7 +50,17 @@
                         </div>
                     </div>
                 </div>
-            </div>                                    
+            </div>                        
+
+            <div class="form-group row">    <!--Campo region del formulario-->
+                <label for="region" class="col-from-label col-sm-2">Region</label>  <!--Etiqueta nombre-->
+                <div class="col-sm-6">
+                    <select  class="form-control" [(ngModel)]="cliente.region" name="region" style="width: 500px; margin-top: 10px;">
+                    <option *ngFor="let region of regiones" [ngValue]="region">{{region.nombre}}</option>
+                    </select>                     
+                </div>
+            </div>
+
             <div class="form-group row ">
                 <!--Boton de registrar nuevo cliente-->
                 <div class="col-sm-6">

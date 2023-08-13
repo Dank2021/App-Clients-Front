@@ -68,7 +68,7 @@ export class FotoComponent implements OnInit{
 
   cerrarModal(){
     this.modalService.cerrarModal();
-    //this.fotoSeleccionada = null;
+    this.fotoSeleccionada = null; //Se debe dejar en null para desabilitar el boton de subir.
     this.progreso = 0;
   }
 }
