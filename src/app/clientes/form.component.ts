@@ -38,11 +38,12 @@ export class FormComponent implements OnInit{
         }
       }
     )
-    this.clienteService.getRegiones().subscribe( regiones => this.regiones = regiones)
+    this.clienteService.getRegiones().subscribe( regiones => this.regiones = regiones)  //Nos suscribimos y recibimos los datos desde el back de las regiones y se lo asignamos a la variable de este .ts
   }
 
   //Post: Cuando en el formulario se vaya a crear un cliente, redirige a la tabla y emerge una ventana indicando el exito de la peticion Post.
   create(): void{    
+    console.log("Cliente creado: ", this.cliente);    
     this.clienteService.createCliente(this.cliente).subscribe(        
       response => { //El atributo 'response' se comporta como un JSON, por lo que permite no solo usar el campo 'cliente' sino que tambien permite utilizar el campo 'mensaje' que viene desde el back al retornar un map con estos.
         swal.fire('Nuevo Cliente', `Ciente: ${response.cliente.nombre} ${response.cliente.apellido} ${response.mensaje}`, 'success'); //Se emerge una ventana indicado el exito de la funcion, utilizando los atributos de respuesta que envia el back. 
@@ -58,6 +59,7 @@ export class FormComponent implements OnInit{
 
   //Put: Cuando en el formulario se vaya a editar un cliente, redirige a la tabla y emerge una ventana indicando el exito de la peticion Put.
   public update(): void{    
+    console.log("Cliente editado: ", this.cliente);    
     this.clienteService.updateCliente(this.cliente).subscribe(        
       response => { //El atributo 'response' se comporta como un Cliente, por lo que permite no se puede usar el campo 'mensaje' que viene desde el back.
         swal.fire('Editado', `Cliente ${response.nombre} ${response.apellido} editado con exito`, 'success');
@@ -70,4 +72,12 @@ export class FormComponent implements OnInit{
       }
     )    
   }  
+
+  public compararRegion(o1 : Region, o2 : Region): boolean{             
+     ////o1 === null || o2 === null || o1 === undefined || o1 === undefined ? false : o1.id === o2.id;
+     if (o1 === undefined && o2 === undefined) {
+      return true;
+     }
+    return o1 && o2 ? o1.id === o2.id : false;  //Se verifica la existencia de los objetos, si existen, se comparan por id. Sino, retorna false.
+  }
 }

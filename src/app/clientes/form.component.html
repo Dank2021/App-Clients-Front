@@ -52,11 +52,16 @@
                 </div>
             </div>                        
 
-            <div class="form-group row">    <!--Campo region del formulario-->
-                <label for="region" class="col-from-label col-sm-2">Region</label>  <!--Etiqueta nombre-->
+            <div class="form-group row">    
+                <label for="region" class="col-from-label col-sm-2">Region</label>  
                 <div class="col-sm-6">
-                    <select  class="form-control" [(ngModel)]="cliente.region" name="region" style="width: 500px; margin-top: 10px;">
-                    <option *ngFor="let region of regiones" [ngValue]="region">{{region.nombre}}</option>
+                    <!--Se usa el compareWith puesto que en caso de que el valor "region" del cliente se encuente en la lista, este se seleccione  
+                        directamente en la lista desplegable. Para eso debe comparar de alguna manera (id o nombre) ambos objetos; el del valor 
+                        "region" del Cliente, con los valores de la lista "regiones". Esa comparacion se hace en el metodo compararRegion()
+                    -->
+                    <select [compareWith]="compararRegion" class="form-control" [(ngModel)]="cliente.region" name="region" style="width: 500px; margin-top: 10px;">
+                        <option [ngValue]="undefined">Seleccionar una region</option>
+                        <option *ngFor="let region of regiones" [ngValue]="region">{{region.nombre}}</option>
                     </select>                     
                 </div>
             </div>
